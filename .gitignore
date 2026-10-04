@@ -1,0 +1,13 @@
+node_modules
+.dependency-backup
+.next
+next-env.d.ts
+.env*.local
+.env
+.env.*
+!.env.local.example
+.vercel
+*.tsbuildinfo
+
+# client-submitted reviews (local dev storage)
+data/.reviews.json

@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ───────────────────────── DESIGN TOKENS ─────────────────────────
+   Colors are space-separated RGB channels so Tailwind can add alpha
+   (bg-accent/20). To swap the accent: change --accent (+ --accent-ink,
+   the text color placed ON the accent).
+
+     lime   (default): 198 255 0
+     violet          : 123 97 255   (use --accent-ink: 255 255 255)
+*/
+:root {
+  /* Space-separated RGB channels so Tailwind can add alpha (bg-brand/20). */
+  --orange-deep: 232 80 10; /* #E8500A */
+  --orange: 255 106 0; /* #FF6A00 */
+  --orange-light: 255 154 60; /* #FF9A3C */
+  --white: 255 255 255; /* #FFFFFF */
+  --cream: 255 246 238; /* #FFF6EE */
+  --ink: 17 17 17; /* #111111 */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  background: rgb(var(--ink));
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  background: rgb(var(--ink));
+  color: rgb(var(--cream));
+  font-family: var(--font-body), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::selection {
+  background: rgb(var(--orange));
+  color: rgb(var(--white));
+}
+
+/* Locked while loader / intro / modal are up (Lenis also stops). */
+html.is-locked,
+html.is-locked body {
+  overflow: hidden;
+}
+
+/* Lenis base styles (inlined so no extra request). */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ───────────────────────── CUSTOM CURSOR ───────────────────────── */
+@media (hover: hover) and (pointer: fine) {
+  html.has-cursor,
+  html.has-cursor a,
+  html.has-cursor button,
+  html.has-cursor select,
+  html.has-cursor label,
+  html.has-cursor [data-cursor] {
+    cursor: none;
+  }
+}
+
+/* Ring: white (blend-difference so it shows on any background) → solid orange over clickables */
+.cursor-ring { mix-blend-mode: difference; }
+.cursor-ring[data-on='1'] {
+  mix-blend-mode: normal;
+  background: rgb(var(--orange) / 0.9);
+  border-color: rgb(var(--orange));
+}
+
+/* ───────────────────────── MARQUEE (reviews) ───────────────────────── */
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-duration, 60s) linear infinite;
+  will-change: transform;
+}
+.marquee-track.is-reverse {
+  animation-direction: reverse;
+}
+.marquee-wrap:hover .marquee-track,
+.marquee-wrap:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes scrollcue {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(200%); }
+}
+
+/* ───────────────────────── PHASE-BASED REVEALS ───────────────────────── */
+.nav-fade {
+  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+}
+html[data-phase='loading'] .nav-fade,
+html[data-phase='intro'] .nav-fade {
+  opacity: 0;
+  transform: translateY(-12px);
+  pointer-events: none;
+}
+
+/* ───────────────────────── REDUCED MOTION ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* Marquees become static, horizontally scrollable rows. */
+  .marquee-track { animation: none !important; }
+  .marquee-wrap { overflow-x: auto; }
+}
+
+@layer utilities {
+  .text-stroke {
+    -webkit-text-stroke: 1.5px rgb(var(--fg) / 0.5);
+    color: transparent;
+  }
+  .glass {
+    background: linear-gradient(135deg, rgb(255 255 255 / 0.08), rgb(255 255 255 / 0.02));
+    border: 1px solid rgb(255 255 255 / 0.1);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+  }
+  /* chunky silver/chrome heading used on the dark sections */
+  .text-chrome {
+    background: linear-gradient(180deg, #ffffff 0%, #d5d8de 38%, #8b9098 52%, #e9ebef 78%, #ffffff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 6px 0 rgba(0, 0, 0, 0.45));
+  }
+  /* same glossy heading style, in the brand orange (used by the About Me heading) */
+  .text-chrome-orange {
+    background: linear-gradient(180deg, #ffd0a0 0%, #ff9a3c 38%, #e8500a 55%, #ff8a3c 80%, #ffc08a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 6px 0 rgba(0, 0, 0, 0.45));
+  }
+  .text-outline {
+    -webkit-text-stroke: 2px rgb(var(--cream) / 0.9);
+    color: transparent;
+  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+}
