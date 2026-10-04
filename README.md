@@ -2,6 +2,22 @@
 
 Next.js 15 (App Router) · TypeScript · Tailwind · React Three Fiber + drei · GSAP/ScrollTrigger · Framer Motion · Lenis.
 
+## Screenshots
+
+### Homepage
+
+![Portfolio homepage with animated 3D technology icons](docs/screenshots/home.jpg)
+
+### Project showcase
+
+![Portfolio project showcase featuring IronForge Fitness](docs/screenshots/projects.jpg)
+
+### Client reviews
+
+![Client reviews from RoyaleSleepy and Shakshi](docs/screenshots/reviews.jpg)
+
+## Run locally
+
 ```bash
 npm install
 npm run dev      # http://localhost:3000
