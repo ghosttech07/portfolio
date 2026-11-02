@@ -1,11 +1,9 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { services, servicesSubtitle, servicesText, servicesTitle, type ServiceCategory } from '@/data/content';
+import { useRef } from 'react';
+import { services, servicesSubtitle, servicesTitle, type ServiceCategory } from '@/data/content';
 import { useReveal } from '@/lib/hooks';
 import { pad2 } from '@/lib/utils';
-import PricingModal from './PricingModal';
-import Portal from '@/components/ui/Portal';
 import SceneScroll from '@/components/ui/SceneScroll';
 
 /** Stroke icons in the same style as the social icons. Add a key here + in ServiceCategory['icon'] to add one. */
@@ -61,15 +59,12 @@ function Icon({ name, className = '' }: { name: ServiceCategory['icon']; classNa
 
 /**
  * SECTION — SERVICES: light background, black chunky heading, big numbered rows split by
- * hairlines. Each row lists the service points and has a "View Pricing" button that opens
- * a pricing dialog. The last row (Custom Projects) is a dark, accent-outlined card.
- * All copy and prices live in `services` / `servicesText` in data/content.ts.
+ * hairlines. Each row lists the service points. The last row (Custom Projects) is a dark, accent-outlined card.
+ * All copy lives in `services` / `servicesText` in data/content.ts.
  */
 export default function Services() {
   const root = useRef<HTMLElement>(null);
-  const [openId, setOpenId] = useState<string | null>(null);
   useReveal(root);
-  const active = services.find((s) => s.id === openId) ?? null;
 
   return (
     <section id="services" ref={root} className="relative overflow-hidden bg-[#f3f3f1] px-5 pb-28 pt-20 text-ink sm:px-10 sm:pb-40 sm:pt-24">
@@ -92,8 +87,8 @@ export default function Services() {
               data-rise
               className={
                 custom
-                  ? 'group mt-10 grid grid-cols-1 gap-x-4 gap-y-5 rounded-[2rem] border-2 border-brand bg-ink p-6 text-white shadow-[0_30px_80px_-30px_rgba(255,106,0,0.7)] sm:grid-cols-[8.5rem_1fr_auto] sm:gap-x-8 sm:gap-y-6 sm:p-10'
-                  : 'group grid grid-cols-1 gap-x-4 gap-y-5 border-b border-ink/15 py-8 first:border-t sm:grid-cols-[8.5rem_1fr_auto] sm:items-start sm:gap-x-8 sm:py-10'
+                  ? 'group mt-10 grid grid-cols-1 gap-x-4 gap-y-5 rounded-[2rem] border-2 border-brand bg-ink p-6 text-white shadow-[0_30px_80px_-30px_rgba(255,106,0,0.7)] sm:grid-cols-[8.5rem_1fr] sm:gap-x-8 sm:gap-y-6 sm:p-10'
+                  : 'group grid grid-cols-1 gap-x-4 gap-y-5 border-b border-ink/15 py-8 first:border-t sm:grid-cols-[8.5rem_1fr] sm:items-start sm:gap-x-8 sm:py-10'
               }
             >
               <span
@@ -134,40 +129,17 @@ export default function Services() {
                 ) : (
                   <div className="mt-5 max-w-2xl text-sm leading-relaxed text-white/80 sm:text-base">
                     <p>{s.description}</p>
-                    <p className="mt-4 font-chunk text-lg text-brand sm:text-2xl">{s.startingPrice}</p>
                   </div>
                 )}
               </div>
 
-              {!custom && <div className="sm:pt-1">
-                <button
-                  onClick={() => setOpenId(s.id)}
-                  aria-haspopup="dialog"
-                  aria-label={`${servicesText.viewPricing}: ${s.title}`}
-                  className={`w-full whitespace-nowrap rounded-full border px-6 py-3 text-[11px] font-bold uppercase tracking-[0.15em] transition-colors duration-300 sm:w-auto ${
-                    custom
-                      ? 'border-brand bg-brand text-white hover:bg-white hover:text-ink'
-                      : 'border-ink/40 hover:border-brand hover:bg-brand hover:text-white'
-                  }`}
-                >
-                  {servicesText.viewPricing}
-                </button>
-              </div>}
             </li>
           );
         })}
       </ol>
-      <ul className="mx-auto mt-8 max-w-5xl space-y-2 text-sm leading-relaxed text-ink/65">
-        {servicesText.pricingTerms.map((term) => <li key={term}>{term}</li>)}
-      </ul>
 
       </SceneScroll>
 
-      {active && (
-        <Portal>
-          <PricingModal key={active.id} service={active} onClose={() => setOpenId(null)} />
-        </Portal>
-      )}
     </section>
   );
 }

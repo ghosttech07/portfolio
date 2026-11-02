@@ -260,30 +260,18 @@ export const about = {
 };
 
 /**
- * SERVICES section. Edit everything here: the copy, the service points, and the prices.
- * Each service point has its own `price` (a placeholder for now). Replace the
- * "₹XX,XXX – ₹XX,XXX" strings with real ranges whenever you decide them.
+ * SERVICES section. Edit everything here: the copy and the service points.
  */
 export const servicesTitle = 'Services';
 export const servicesSubtitle = 'What I can build for you';
 export const servicesText = {
-  pricingTerms: [
-    'Clients are responsible for purchasing their domain.',
-    'All third-party costs are paid by the client.',
-    'Maintenance after project delivery is optional and charged separately. Website maintenance follows the listed range; app maintenance is quoted based on requirements.',
-  ],
-  viewPricing: 'View Pricing',
-  pricingTitle: 'Pricing',
   quoteCta: 'Get a Quote',
   quoteTarget: '#connect', // any section id, e.g. '#connect'
   close: 'Close',
 };
 
-const PRICE = '₹XX,XXX – ₹XX,XXX';
-
 export interface ServicePoint {
   name: string;
-  price: string;
 }
 export interface ServiceCategory {
   id: string;
@@ -291,10 +279,8 @@ export interface ServiceCategory {
   /** which icon to show (see ICONS in components/Services/Services.tsx) */
   icon: 'code' | 'design' | 'ai' | 'app' | 'custom';
   points?: ServicePoint[];
-  /** Custom Projects only: short description + starting range shown in the pricing view. */
+  /** Custom Projects only: short description. */
   description?: string;
-  startingPrice?: string;
-  pricingExplainer?: string;
   highlight?: boolean;
 }
 
@@ -304,12 +290,12 @@ export const services: ServiceCategory[] = [
     title: 'Web Development',
     icon: 'code',
     points: [
-      { name: 'Business websites and landing pages', price: '₹4,999 – ₹79,999' },
-      { name: 'E-commerce websites', price: '₹15,000 – ₹1,50,000' },
-      { name: 'Custom admin panels / CMS', price: '₹6,000 – ₹20,000' },
-      { name: 'Web apps and SaaS MVPs', price: '₹10,000 – ₹70,000' },
-      { name: 'Portfolio websites (animated & 3D)', price: '₹25,000 – ₹95,000' },
-      { name: 'Website maintenance, hosting, and SEO basics', price: '₹3,000 – ₹20,000' },
+      { name: 'Business websites and landing pages' },
+      { name: 'E-commerce websites' },
+      { name: 'Custom admin panels / CMS' },
+      { name: 'Web apps and SaaS MVPs' },
+      { name: 'Portfolio websites (animated & 3D)' },
+      { name: 'Website maintenance, hosting, and SEO basics' },
     ],
   },
   {
@@ -317,9 +303,9 @@ export const services: ServiceCategory[] = [
     title: 'Design',
     icon: 'design',
     points: [
-      { name: 'UI/UX design', price: '₹6,000 – ₹15,000' },
-      { name: 'Wireframes and clickable prototypes', price: '₹6,000 – ₹20,000' },
-      { name: 'Website redesigns', price: '₹10,000 – ₹50,000' },
+      { name: 'UI/UX design' },
+      { name: 'Wireframes and clickable prototypes' },
+      { name: 'Website redesigns' },
     ],
   },
   {
@@ -327,9 +313,9 @@ export const services: ServiceCategory[] = [
     title: 'AI & Automation',
     icon: 'ai',
     points: [
-      { name: 'Workflow automation with n8n', price: '₹5,000 – ₹50,000' },
-      { name: 'AI chatbots for websites and WhatsApp', price: '₹2,000 – ₹10,000' },
-      { name: 'AI feature integration into existing apps', price: '₹4,000 – ₹20,000' },
+      { name: 'Workflow automation with n8n' },
+      { name: 'AI chatbots for websites and WhatsApp' },
+      { name: 'AI feature integration into existing apps' },
     ],
   },
   {
@@ -337,23 +323,12 @@ export const services: ServiceCategory[] = [
     title: 'Application Development',
     icon: 'app',
     points: [
-      { name: 'Cross-platform mobile apps (Android + iOS) with React Native', price: '₹50,000 – ₹2,00,000' },
-      { name: 'App + website combo with a shared backend', price: '₹40,000 – ₹2,00,000' },
-      { name: 'MVP apps for startups', price: '₹40,000 – ₹1,50,000' },
-      { name: 'Business apps (booking, ordering, loyalty, delivery tracking)', price: '₹40,000 – ₹90,000' },
-      { name: 'Play Store / App Store publishing', price: '₹10,000 – ₹15,000' },
+      { name: 'Cross-platform mobile apps (Android + iOS) with React Native' },
+      { name: 'App + website combo with a shared backend' },
+      { name: 'MVP apps for startups' },
+      { name: 'Business apps (booking, ordering, loyalty, delivery tracking)' },
+      { name: 'Play Store / App Store publishing' },
     ],
-  },
-  {
-    id: 'custom-projects',
-    title: 'Custom Projects',
-    icon: 'custom',
-    highlight: true,
-    description:
-      "Have an idea that doesn't fit the categories above? Tell me what you want to build, whether it's a unique tool, an integration, an experimental project, or something completely new, and I'll build it for you. Pricing is flexible and depends on your project's features, complexity, and level of customization. Check the price range below or get a custom quote.",
-    startingPrice: 'Pricing depends on your requirements',
-    pricingExplainer:
-      "The final price depends on your project's features, complexity, and level of customization.",
   },
 ];
 
